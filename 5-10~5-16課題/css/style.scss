@@ -1,0 +1,887 @@
+$theme-color: #960000;
+
+//マップ型変数breakpointsを定義
+$breakpoints: (
+  //キー　　値
+  "md": "screen and (max-width: 899px)",
+  //767px以下（スマホ）用の表示
+  "pc": "screen and (min-width: 900px)",
+  //768px以上（タブレット・PC）用の表示
+  "sp": "screen and (max-width: 550px)" //768px以上（タブレット・PC）用の表示
+) !default;
+
+//メディアクエリ用のmixinを定義。デフォ値はmd
+@mixin mq($breakpoint: sp) {
+  //map-get(マップ型変数, キー)で値を取得
+  @media #{map-get($breakpoints, $breakpoint)} {
+    //この中をカスタムできる
+    @content;
+  }
+}
+
+// 共通クラス開始
+
+.container {
+  max-width: 1255px;
+  margin: 0 auto;
+  width: 100%;
+  color: #333;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+img {
+  width: 100%;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+body.no-scroll {
+  overflow: hidden;
+}
+
+h2{
+  color: $theme-color;
+  font-size: 35px;
+  line-height: 27px;
+  
+  @include mq(md){
+    font-size: 28px;
+  }
+
+  span{
+    font-size: 13px;
+    margin-top: -20px;
+    text-align: center;
+    padding-left: 5px;
+
+    @include mq(md){
+      font-size: 10px;
+    }
+  }
+}
+
+a{
+
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+// 共通クラス終了
+
+// header開始
+header {
+  .container {
+    .header-pc {
+      margin-top: 50px;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+
+      @include mq(md) {
+        display: none;
+      }
+
+      li {
+        margin-top: 10px;
+        padding-right: 40px;
+
+        &:last-of-type {
+          padding-right: 0;
+        }
+
+        a {
+        }
+        h1 {
+          margin-top: -10px;
+        }
+      }
+    }
+    // header-pc終了
+
+    .header-sp {
+      display: none;
+      padding-left: 20px;
+      list-style: none;
+      margin-top: 30px;
+
+      @include mq(md) {
+        display: flex;
+      }
+
+      h1 {
+        @include mq(sp) {
+          font-size: 22px;
+        }
+      }
+
+      nav.NavMenu {
+        position: fixed;
+        z-index: 12;
+        top: 0;
+        left: 0;
+        background: #666;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        display: none;
+        overflow: auto;
+      }
+
+      nav.NavMenu ul {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+      }
+
+      nav.NavMenu ul li {
+        font-size: 24px;
+        list-style-type: none;
+        width: 100%;
+        padding-bottom: 0px;
+      }
+
+      nav.NavMenu ul li:last-child {
+        padding-bottom: 0;
+      }
+
+      nav.NavMenu ul li a {
+        display: block;
+        color: #fff;
+        padding: 15px 0;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      /*ボタンのスタイル*/
+      .Toggle {
+        position: absolute;
+        right: 18px;
+        top: 32px;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        z-index: 13;
+        display: block;
+
+        @include mq(sp) {
+          top: 24px;
+        }
+      }
+
+      .Toggle span {
+        display: block;
+        position: absolute;
+        width: 35px;
+        border-bottom: solid 4px #c1c1c1;
+        -webkit-transition: 0.35s ease-in-out;
+        -moz-transition: 0.35s ease-in-out;
+        transition: 0.35s ease-in-out;
+        left: 6px;
+      }
+
+      .Toggle span:nth-child(1) {
+        top: 9px;
+      }
+
+      .Toggle span:nth-child(2) {
+        top: 20px;
+      }
+
+      .Toggle span:nth-child(3) {
+        top: 31px;
+      }
+
+      .Toggle.active span:nth-child(1) {
+        top: 18px;
+        left: 6px;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        border-bottom: solid 3px #c1c1c1;
+      }
+      .Toggle.active span:nth-child(2),
+      .Toggle.active span:nth-child(3) {
+        top: 18px;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        transform: rotate(45deg);
+        border-bottom: solid 3px #c1c1c1;
+      }
+    }
+  }
+}
+// header終了
+
+// itemsクラス開始
+.items {
+  margin-top: 100px;
+
+  .items-top {
+    display: flex;
+    // justify-content: center;
+
+    a {
+      width: 50%;
+      border: 1px solid #333;
+      text-align: center;
+      padding: 30px;
+      text-decoration: none;
+
+      @include mq(sp){
+        padding: 30px 10px;
+      }
+
+      .items-top-right {
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+
+        &::after {
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          content: "";
+          width: 100%;
+          height: 2px;
+          background: #333;
+          transform: scale(0, 1);
+          transform-origin: left top;
+          transition: transform 0.3s;
+        }
+        &:hover::after {
+          transform: scale(1, 1);
+        }
+      }
+    }
+
+    #items-top-left-bg {
+      background-color: #f5f5f5;
+    }
+    #items-top-right-bg {
+      &:hover {
+        background-color: #f5f5f5;
+        transition: 0.3s;
+      }
+    }
+  }
+  // items-top終了
+
+  .items-item-top-wrapper{
+    display: flex;
+
+    @include mq(sp){
+      display: block;
+    }
+    
+    .items-item-top{
+      width: 50%;
+      border: 1px solid #333;
+
+      @include mq(sp){
+        width: 100%;
+      }
+    }
+  }
+
+  .items-item-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+
+    @include mq(sp){
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .items-item {
+      border: 1px solid #333;
+    }
+    .items-item3 {
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      padding-top: 70px;
+      
+      @include mq(md){
+        padding-top: 40px;
+      }
+    }
+    .items-item4 {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+    .items-item5 {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
+    .items-item6 {
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      padding-top: 70px;
+
+      @include mq(md){
+        padding-top: 40px;
+      }
+    }
+  }
+}
+
+// itemsクラス終了
+
+
+
+// aboutクラス開始
+.about{
+  padding-top: 150px;
+  padding-bottom: 150px;
+
+  @include mq(md){
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+
+  @include mq(sp){
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .container{
+    max-width: 1000px;
+    margin: 0 auto;
+
+    .about-catchcopy{
+      font-size: 42px;
+      margin-top: 60px;
+      font-weight: bold;
+
+      @include mq(md){
+        font-size: 36px;
+        margin-top: 35px;
+      }
+      @include mq(sp){
+        font-size: 25px;
+        margin-top: 30px;
+      }
+    }
+    .about-text{
+      font-size: 24px;
+      margin-top: 50px;
+      line-height: 2em;
+
+      @include mq(md){
+        font-size: 20px;
+        margin-top: 35px;
+      }
+
+      @include mq(sp){
+        font-size: 14px;
+        margin-top: 25px;
+      }
+    }
+  }
+}
+
+// aboutクラス終了
+
+
+// newsクラス開始
+.news{
+  margin-bottom: 150px;
+  padding-right: 5px;
+  padding-left: 5px;
+
+  .container{
+    max-width: 1000px;
+    border: 3px solid #eee;
+    padding-top: 50px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 50px;
+
+    @include mq(sp){
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    .news-top{
+      display: flex;
+      
+      .news-link{
+        margin-left: auto;
+        a{
+          color: $theme-color;
+          font-weight: bold;
+
+          @include mq(sp){
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    // news-top終わり
+    .news-item-wrapper{
+      margin-top: 40px;
+      
+
+      a{
+
+        
+        .news-item{
+          display: flex;
+          border-bottom: 1px solid #707070;
+          padding-bottom: 20px;
+          padding-top: 20px;
+
+          &:hover{
+            text-decoration: underline ;
+          }
+
+          @include mq(md){
+            display: block;
+          }
+          
+          .news-item-left{
+            display: flex;
+            width: 300px;
+            border-right: 3px solid #707070;
+            font-weight: bold;
+            padding-top: 10px;
+
+            @include mq(md){
+              border: none;
+              width: 100%;
+              font-size: 14px;
+            }
+
+            @include mq(sp){
+              font-size: 12px;
+            }
+
+            .news-date{
+              padding-right: 10px;
+            }
+          }
+          
+          .news-item-right{
+            padding-left: 35px;
+
+            @include mq(md){
+              padding-left: 0;
+              padding-top: 10px;
+            }
+            @include mq(sp){
+              font-size: 14px;
+            }
+          }
+        }
+        
+      }
+    }
+  }
+}
+  // newsクラス終了
+
+
+  // footer開始
+  footer{
+    background-color: #000;
+    color: #fff;
+    padding-top: 95px;
+    padding-left: 110px;
+    padding-bottom: 95px;
+    padding-right: 110px;
+
+    @include mq(md){
+      padding-top: 50px;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-bottom: 50px;
+    }
+
+    @include mq(sp){
+      padding-right: 10px;
+      padding-left: 20px;
+      padding-bottom: 20px;
+    }
+
+    .footer-wrapper{
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+
+      @include mq(md){
+        display: block;
+      }
+
+
+      .footer-left{
+        
+        .footer-company-name{
+          font-size: 24px;
+          font-weight: bold;
+          padding-bottom: 30px;
+        }
+
+        ul{
+          display: flex;
+          list-style: none;
+
+          li{
+            padding-right: 20px;
+            padding-bottom: 50px;
+
+            a{
+              font-weight: bold;
+              color: white;
+              font-size: 18px;
+
+              @include mq(sp){
+                font-size: 13px;
+              }
+            }
+          }
+        }
+        .footer-left-item{
+          display: flex;
+          padding-bottom: 30px;
+
+          .footer-left-item-text{
+            width: 180px;
+
+            @include mq(sp){
+              width: 130px;
+              font-size: 12px;
+            }
+          }
+          .footer-right-item-text{
+
+            @include mq(sp){
+              font-size: 12px;
+            }
+          }
+        }
+      }
+      // footer-left終わり
+
+      .footer-right{
+        margin-left: auto;
+
+        .contact{
+          // margin-bottom: 40px;
+          // padding-top: 100px;
+        }
+        .footer-right-text{
+          margin-top: 20px;
+
+          @include mq(sp){
+            margin-top: 10px;
+          }
+
+          a{
+            color: white;
+
+            @include mq(sp){
+              font-size: 12px;
+            }
+
+            &:hover{
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .copyright{
+      padding-top: 70px;
+      max-width: 1200px;
+      margin: 0 auto;
+
+      @include mq(md){
+        text-align: center;
+        padding-top: 50px;
+      }
+      @include mq(sp){
+        padding-top: 30px;
+      }
+    }
+  }
+  // footer終了
+
+  // index.html終了
+
+  // news.html開始
+  
+  // news-onlyクラス開始
+  .news-only{
+    margin-bottom: 150px;
+
+    .container{
+
+
+      h2{
+        margin-bottom: 50px;
+        margin-top: 80px;
+      }
+
+      a{
+
+        .news-only-item{
+          display: flex;
+          margin-bottom: 20px;
+
+          @include mq(md){
+            margin-bottom: 40px;
+          }
+
+          .news-only-item-left{
+            width: 220px;
+            height: 150px;
+            padding-right: 30px;
+            
+            @include mq(md){
+              // width: 150px;
+              // height: 100px;
+              // display: none;
+            }
+            @include mq(sp){
+              width: 150px;
+              height: 100px;
+              display: none;
+            }
+            img{
+              width: 220px;
+              height: 150px;
+              // width: 100%;
+
+              @include mq(md){
+                // width: 120px;
+                // height: 100px;
+              }
+              @include mq(sp){
+                width: 100px;
+                height: 60px;
+              }
+            }
+          }
+          
+          .news-only-item-right{
+            width: 70%;
+
+            @include mq(md){
+              width: 62%;
+            }
+
+            @include mq(sp){
+              width: 100%;
+            }
+
+            .news-only-item-right-top{
+              display: flex;
+              color: #968F8F;
+
+              .news-only-item-date{
+                font-size: 12px;
+                padding-right: 5px;
+              }
+              .news-only-item-category{
+                font-size: 12px;
+                padding-left: 5px;
+              }
+            }
+            .news-only-item-title{
+              padding-top: 10px;
+              font-weight: bold;
+              line-height: 2rem;
+
+              @include mq(md){
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+
+      .news-pager{
+        margin-top: 80px;
+
+        ul{
+          list-style: none;
+          display: flex;
+          justify-content: center;
+          
+          .active{
+            background-color: #F8A88F;
+          }
+
+          li{
+            border: 1px solid #333;
+            border-radius: 50%;
+            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+
+            &:hover{
+              background-color: #f8a88f;
+            }
+            
+            a{
+              padding: 10px 10px;
+              text-align: center;
+              font-weight: bold;
+
+              &:hover{
+                text-decoration: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .news-pager ul li .active{
+  }
+  // news-onlyクラス終了
+
+  // news.html終了
+
+  // about.html開始
+  .about-single{
+    margin-top: 70px;
+
+    .container{
+      max-width: 1100px;
+
+      .about-single-top-wrapper{
+        // justify-content: center;
+        max-width: 1050px;
+        // padding-left: 60px;
+        // padding-right: 50px;
+        // border: 1px solid #333;
+        padding-top: 70px;
+        margin: 0 auto;
+        padding-bottom: 60px;
+
+
+        .about-single-top-item{
+          display: flex;
+          margin-bottom: 80px;
+          justify-content: center;
+
+          @include mq(md){
+            display: block;
+          }
+
+          &:last-of-type{
+            flex-flow: row-reverse;
+            justify-content: center;
+          }
+          
+          .about-single-top-left{
+            width: 350px;
+            margin-right: 60px;
+            
+            @include mq(md){
+              width: 500px;
+              margin: 0 auto;
+            }
+            @include mq(sp){
+              width: 100%;
+            }
+            
+            img{
+              width: 100%;
+            }
+          }
+          .about-single-top-right{
+            margin-right: 60px;
+
+            @include mq(md){
+              margin-right: 0;
+              padding-top: 20px;
+              margin: 0 auto;
+              // text-align: center;
+              max-width: 500px;
+              margin: 0 auto;
+            }
+            @include mq(sp){
+              max-width: 100%;
+            }
+
+            h3{
+              line-height: 2rem;
+            }
+            .about-single-top-text{
+              font-size: 14px;
+              padding-top: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // about-bottom開始
+  .about-bottom{
+    margin-bottom: 120px;
+
+    .container{
+      max-width: 1100px;
+
+      h3{
+        margin-bottom: 40px;
+      }
+
+      .about-bottom-item{
+        border-bottom: 1px solid #707070;
+        margin-bottom: 30px;
+
+        .about-bottom-title{
+          color: $theme-color;
+          font-weight: bold;
+          font-size: 18px;
+          padding-bottom: 15px;
+
+
+          span{
+            padding-right: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: -3px;
+          }
+        }
+
+        .about-bottom-text{
+          // font-weight: bold;
+          padding-left: 40px;
+          padding-bottom: 30px;
+        }
+      }
+    }
+  }
+  // about-bottom終了
+
+    // about.html終了
